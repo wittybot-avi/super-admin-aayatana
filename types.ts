@@ -176,3 +176,35 @@ export interface AuditLogEntry {
   timestamp: string;
   meta: any;
 }
+
+// Analytics Types
+export type DashboardTemplate = 'Fleet Health Overview' | 'Battery Safety Alerts' | 'Warranty & Failure Trends';
+
+export interface Dashboard {
+  id: string;
+  tenantId: string;
+  name: string;
+  template: DashboardTemplate;
+  widgets: string[]; // Simplified: list of widget names/keys
+  createdAt: string;
+  updatedAt: string;
+}
+
+// Settings Types
+export type TenantRegion = 'INDIA' | 'EU' | 'GLOBAL';
+export type SamplingProfile = 'HIGH_FREQ_1S' | 'BALANCED_5S' | 'LOW_FREQ_30S';
+export type NotificationChannel = 'EMAIL' | 'SMS' | 'WHATSAPP_WEBHOOK';
+
+export interface TenantSettings {
+  tenantId: string;
+  region: TenantRegion;
+  dppReadiness: boolean;
+  retentionDays: 30 | 90 | 180 | 365;
+  samplingProfile: SamplingProfile;
+  notificationChannels: NotificationChannel[];
+  webhookUrl?: string;
+  requireMfaAdmins: boolean;
+  apiIpAllowlistEnabled: boolean;
+  ipAllowlist: string[];
+  updatedAt: string;
+}

@@ -5,6 +5,8 @@ import { OnboardingWizard } from './components/wizard/OnboardingWizard';
 import { UsersPage } from './components/users/UsersPage';
 import { DevicesPage } from './components/devices/DevicesPage';
 import { ModulesPage } from './components/modules/ModulesPage';
+import { AnalyticsPage } from './components/analytics/AnalyticsPage';
+import { SettingsPage } from './components/settings/SettingsPage';
 import { Building2, Plus, Search, Bell, HelpCircle } from 'lucide-react';
 import { TenantService } from './services/tenantService';
 import { Tenant } from './types';
@@ -62,6 +64,10 @@ function App() {
         {currentView === 'devices' && <DevicesPage />}
 
         {currentView === 'modules' && <ModulesPage />}
+
+        {currentView === 'analytics' && <AnalyticsPage />}
+
+        {currentView === 'settings' && <SettingsPage />}
 
         {currentView === 'tenants' && (
           <div className="space-y-6">
@@ -122,7 +128,7 @@ function App() {
         )}
 
         {/* Placeholder for other views */}
-        {!['onboarding', 'tenants', 'users', 'devices', 'modules'].includes(currentView) && (
+        {!['onboarding', 'tenants', 'users', 'devices', 'modules', 'analytics', 'settings'].includes(currentView) && (
           <div className="bg-white rounded-2xl p-20 text-center border-2 border-dashed border-slate-200">
             <Building2 size={64} className="mx-auto text-slate-200 mb-6" />
             <h3 className="text-xl font-bold text-slate-900 mb-2">Work in Progress</h3>
