@@ -16,7 +16,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, onChangeView, cur
   // Define scope rules
   // Global items: Always enabled
   // Scoped items: Enabled only when currentTenant is present
-  const menuItems = [
+  const mainMenuItems = [
     { id: 'tenants', label: 'Tenants', icon: Building2, scoped: false },
     { id: 'dashboard', label: 'Tenant Overview', icon: LayoutDashboard, scoped: true },
     // Onboarding is special: Only show if DRAFT
@@ -32,9 +32,53 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, onChangeView, cur
     { id: 'devices', label: 'Devices', icon: Radio, scoped: true },
     { id: 'modules', label: 'Modules', icon: Box, scoped: true },
     { id: 'analytics', label: 'Analytics', icon: BarChart3, scoped: true },
-    { id: 'audit_logs', label: 'Audit Logs', icon: FileClock, scoped: true },
     { id: 'settings', label: 'Settings', icon: Settings, scoped: true },
   ];
+
+  const bottomMenuItems = [
+    { id: 'audit_logs', label: 'Audit Logs', icon: FileClock, scoped: false },
+  ];
+
+  const renderItem = (item: any) => {
+    if (item.hidden) return null;
+
+    const Icon = item.icon;
+    const isActive = currentView === item.id;
+    const isDisabled = item.scoped && !currentTenant;
+
+    return (
+        <button
+            key={item.id}
+            onClick={() => !isDisabled && onChangeView(item.id)}
+            disabled={isDisabled}
+            title={isDisabled ? "Select a tenant to manage this area" : ""}
+            className={`w-full flex items-center space-x-3 px-4 py-3.5 rounded-xl transition-all duration-200 group relative ${
+            isActive 
+                ? 'bg-slate-800 text-teal-400 font-semibold' 
+                : isDisabled
+                ? 'opacity-40 cursor-not-allowed text-slate-600'
+                : 'hover:bg-slate-800/50 hover:text-white'
+            }`}
+        >
+            {isActive && (
+            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-teal-500 rounded-r-full shadow-[0_0_8px_rgba(20,184,166,0.5)]"></div>
+            )}
+            <Icon size={20} className={`transition-colors flex-shrink-0 ${isActive ? 'text-teal-400' : 'text-slate-500 group-hover:text-slate-300'}`} />
+            <span className="truncate">{item.label}</span>
+            
+            {/* Badge for Setup/Draft */}
+            {/* @ts-ignore */}
+            {item.badge && (
+            <span className="ml-auto px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-500 border border-amber-500/20 text-[10px] font-bold uppercase tracking-wide">
+                {/* @ts-ignore */}
+                {item.badge}
+            </span>
+            )}
+
+            {isDisabled && !item.badge && <Lock size={12} className="ml-auto text-slate-600" />}
+        </button>
+    );
+  };
 
   return (
     <div className="w-72 bg-slate-900 h-screen fixed left-0 top-0 flex flex-col text-slate-300 shadow-2xl z-50 font-sans border-r border-slate-800">
@@ -64,53 +108,20 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, onChangeView, cur
       </div>
 
       <nav className="flex-1 px-4 py-6 space-y-1.5 overflow-y-auto custom-scrollbar">
-        {menuItems.map((item) => {
-          if (item.hidden) return null;
-
-          const Icon = item.icon;
-          const isActive = currentView === item.id;
-          const isDisabled = item.scoped && !currentTenant;
-
-          return (
-            <button
-              key={item.id}
-              onClick={() => !isDisabled && onChangeView(item.id)}
-              disabled={isDisabled}
-              title={isDisabled ? "Select a tenant to manage this area" : ""}
-              className={`w-full flex items-center space-x-3 px-4 py-3.5 rounded-xl transition-all duration-200 group relative ${
-                isActive 
-                  ? 'bg-slate-800 text-teal-400 font-semibold' 
-                  : isDisabled
-                    ? 'opacity-40 cursor-not-allowed text-slate-600'
-                    : 'hover:bg-slate-800/50 hover:text-white'
-              }`}
-            >
-              {isActive && (
-                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-teal-500 rounded-r-full shadow-[0_0_8px_rgba(20,184,166,0.5)]"></div>
-              )}
-              <Icon size={20} className={`transition-colors flex-shrink-0 ${isActive ? 'text-teal-400' : 'text-slate-500 group-hover:text-slate-300'}`} />
-              <span className="truncate">{item.label}</span>
-              
-              {/* Badge for Setup/Draft */}
-              {/* @ts-ignore */}
-              {item.badge && (
-                <span className="ml-auto px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-500 border border-amber-500/20 text-[10px] font-bold uppercase tracking-wide">
-                  {/* @ts-ignore */}
-                  {item.badge}
-                </span>
-              )}
-
-              {isDisabled && !item.badge && <Lock size={12} className="ml-auto text-slate-600" />}
-            </button>
-          );
-        })}
+        {mainMenuItems.map(renderItem)}
       </nav>
 
-      <div className="p-4 border-t border-slate-800/50">
-        <button className="flex items-center space-x-3 text-slate-400 hover:text-red-400 hover:bg-slate-800/50 transition-all w-full px-4 py-3 rounded-xl">
-          <LogOut size={20} />
-          <span className="font-medium">Sign Out</span>
-        </button>
+      {/* Bottom Actions */}
+      <div className="p-4 border-t border-slate-800/50 space-y-1.5">
+         <div className="text-[10px] font-bold text-slate-600 uppercase tracking-widest px-4 mb-2">Governance</div>
+         {bottomMenuItems.map(renderItem)}
+         
+         <div className="h-2"></div>
+         
+         <button className="flex items-center space-x-3 text-slate-400 hover:text-red-400 hover:bg-slate-800/50 transition-all w-full px-4 py-3 rounded-xl">
+            <LogOut size={20} />
+            <span className="font-medium">Sign Out</span>
+         </button>
       </div>
     </div>
   );

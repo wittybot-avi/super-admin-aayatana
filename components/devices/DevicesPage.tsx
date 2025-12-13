@@ -6,9 +6,13 @@ import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
 import { Badge } from '../ui/Badge';
 import { Modal } from '../ui/Modal';
-import { Plus, Radio, MoreVertical, Trash2, Power, WifiOff, AlertCircle, RefreshCw } from 'lucide-react';
+import { Plus, Radio, MoreVertical, Trash2, Power, WifiOff, AlertCircle, Info } from 'lucide-react';
 
-export const DevicesPage: React.FC = () => {
+interface DevicesPageProps {
+  onNavigate?: (view: string) => void;
+}
+
+export const DevicesPage: React.FC<DevicesPageProps> = ({ onNavigate }) => {
   const [devices, setDevices] = useState<Device[]>([]);
   const [loading, setLoading] = useState(true);
   const [tenantId, setTenantId] = useState('');
@@ -129,10 +133,27 @@ export const DevicesPage: React.FC = () => {
         </Button>
       </div>
 
-      {/* Context Banner */}
-      <div className="bg-slate-100 rounded-lg px-4 py-2 border border-slate-200 text-xs text-slate-500 flex items-center justify-between">
-        <span>Managing devices for tenant ID: <span className="font-mono font-semibold text-slate-700">{tenantId}</span></span>
-        <span>Provisioning rules are set during onboarding; manage live devices here.</span>
+      {/* Info Banner */}
+      <div className="bg-indigo-50 border border-indigo-100 rounded-xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex items-start space-x-3">
+              <div className="p-2 bg-indigo-100 text-indigo-600 rounded-lg flex-shrink-0">
+                   <Info size={20} />
+              </div>
+              <div>
+                  <h3 className="text-sm font-bold text-indigo-900">Tenant Device Inventory</h3>
+                  <p className="text-xs text-indigo-700 mt-1 max-w-xl">
+                      Device registration is typically performed by the Tenant Admin / Ops team. Super Admin uses this for POC seeding or managed deployments.
+                  </p>
+              </div>
+          </div>
+          <div className="flex flex-col sm:flex-row sm:space-x-3 space-y-2 sm:space-y-0 flex-shrink-0">
+              <Button variant="outline" size="sm" onClick={() => onNavigate?.('onboarding')} className="bg-white border-indigo-200 text-indigo-700 hover:bg-indigo-50 whitespace-nowrap">
+                  Review Provisioning Policy
+              </Button>
+              <Button variant="outline" size="sm" onClick={() => onNavigate?.('users')} className="bg-white border-indigo-200 text-indigo-700 hover:bg-indigo-50 whitespace-nowrap">
+                  Invite Tenant Admin
+              </Button>
+          </div>
       </div>
 
       {/* Devices Table */}

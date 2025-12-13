@@ -214,7 +214,7 @@ function App() {
         
         {currentView === 'users' && <UsersPage />}
         
-        {currentView === 'devices' && <DevicesPage />}
+        {currentView === 'devices' && <DevicesPage onNavigate={setCurrentView} />}
 
         {currentView === 'modules' && <ModulesPage />}
 

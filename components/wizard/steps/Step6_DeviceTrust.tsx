@@ -54,6 +54,41 @@ export const Step6_DeviceTrust: React.FC<Step6Props> = ({ data, updateData }) =>
         </div>
       </div>
 
+      {/* Responsibility Selector */}
+      <div className="bg-indigo-50 border border-indigo-100 rounded-xl p-5">
+         <label className="block text-sm font-bold text-indigo-900 mb-3">Who will onboard devices after setup?</label>
+         <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-8 space-y-3 sm:space-y-0">
+            <label className="flex items-center cursor-pointer group">
+                <input 
+                    type="radio" 
+                    name="owner" 
+                    className="w-4 h-4 text-teal-600 focus:ring-teal-500 border-indigo-300 bg-white"
+                    checked={data.deviceOnboardingOwner === 'TENANT'}
+                    onChange={() => updateData({ deviceOnboardingOwner: 'TENANT' })}
+                />
+                <span className="ml-2 text-sm font-medium text-slate-700 group-hover:text-slate-900">Tenant Admin / Ops Team (Recommended)</span>
+            </label>
+            <label className="flex items-center cursor-pointer group">
+                <input 
+                    type="radio" 
+                    name="owner" 
+                    className="w-4 h-4 text-teal-600 focus:ring-teal-500 border-indigo-300 bg-white"
+                    checked={data.deviceOnboardingOwner === 'AAYATANA'}
+                    onChange={() => updateData({ deviceOnboardingOwner: 'AAYATANA' })}
+                />
+                <span className="ml-2 text-sm font-medium text-slate-700 group-hover:text-slate-900">Aayatana Ops (POC / Managed)</span>
+            </label>
+         </div>
+         
+         <div className="mt-4 text-xs text-indigo-800 flex items-start bg-white/50 p-3 rounded-lg border border-indigo-100/50">
+            <div className="mr-2 mt-0.5">ℹ️</div>
+            {data.deviceOnboardingOwner === 'TENANT' 
+                ? "This step configures provisioning policies. The tenant team will register/import actual device inventory after onboarding."
+                : "Aayatana Ops can pre-register seed devices for pilots. Full inventory is still managed post-onboarding."
+            }
+         </div>
+      </div>
+
       {/* Trust Mode Selector */}
       <div>
         <label className="block text-sm font-semibold text-slate-700 mb-3">Device Trust Mode</label>

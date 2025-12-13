@@ -81,6 +81,7 @@ export interface OnboardingState {
   deviceTrustMode: DeviceTrustMode;
   provisioningMode: 'MANUAL' | 'API' | 'QR_SCAN'; // Primary for Aayatana/Hybrid
   externalIngestModes: string[]; // For External trust mode
+  deviceOnboardingOwner: 'TENANT' | 'AAYATANA';
   // Step 7
   integrations: {
     telematics: boolean;
@@ -108,6 +109,7 @@ export const INITIAL_ONBOARDING_STATE: OnboardingState = {
   deviceTrustMode: 'EXTERNAL', // Default, will be overridden by logic in Step 6
   provisioningMode: 'MANUAL',
   externalIngestModes: [],
+  deviceOnboardingOwner: 'TENANT',
   integrations: {
     telematics: false,
     erp: false,
