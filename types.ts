@@ -173,6 +173,8 @@ export interface AuditLogEntry {
   tenantId: string;
   action: string;
   entityType: string;
+  entityId?: string;
+  actor?: string;
   timestamp: string;
   meta: any;
 }

@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { LayoutDashboard, Users, Building2, Radio, ClipboardList, Settings, Box, BarChart3, LogOut } from 'lucide-react';
+import { LayoutDashboard, Users, Building2, Radio, ClipboardList, Settings, Box, BarChart3, LogOut, FileClock } from 'lucide-react';
 
 interface SidebarProps {
   currentView: string;
@@ -15,6 +16,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, onChangeView }) =
     { id: 'devices', label: 'Devices', icon: Radio },
     { id: 'modules', label: 'Modules', icon: Box },
     { id: 'analytics', label: 'Analytics', icon: BarChart3 },
+    { id: 'audit_logs', label: 'Audit Logs', icon: FileClock },
     { id: 'settings', label: 'Settings', icon: Settings },
   ];
 
