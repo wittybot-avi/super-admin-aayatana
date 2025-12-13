@@ -157,3 +157,22 @@ export interface Device {
   lastSeenAt: string | null;
   createdAt: string;
 }
+
+// Module Entitlement Types
+export type ModuleTier = 'Basic' | 'Pro' | 'Enterprise';
+
+export interface ModuleEntitlement {
+  moduleId: ModuleId;
+  enabled: boolean;
+  tier: ModuleTier;
+  updatedAt: string;
+}
+
+export interface AuditLogEntry {
+  id: string;
+  tenantId: string;
+  action: string;
+  entityType: string;
+  timestamp: string;
+  meta: any;
+}
