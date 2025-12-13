@@ -114,3 +114,46 @@ export const INITIAL_ONBOARDING_STATE: OnboardingState = {
     swapApi: false,
   },
 };
+
+// User Management Types
+export type UserRole = 
+  | 'Tenant Admin' 
+  | 'Ops Manager' 
+  | 'Technician' 
+  | 'Data Analyst' 
+  | 'Finance Officer' 
+  | 'Viewer';
+
+export type UserStatus = 'Pending' | 'Active' | 'Disabled';
+
+export interface User {
+  id: string;
+  tenantId: string;
+  fullName: string;
+  email: string;
+  role: UserRole;
+  status: UserStatus;
+  createdAt: string;
+}
+
+// Device Management Types
+export type DeviceType = 
+  | 'Smart BMS' 
+  | 'IoT Gateway' 
+  | 'Swap Station Reader' 
+  | 'Telematics Adapter' 
+  | 'Other';
+
+export type DeviceStatus = 'Provisioned' | 'Active' | 'Offline' | 'Revoked';
+
+export interface Device {
+  id: string;
+  tenantId: string;
+  serial: string;
+  type: DeviceType;
+  status: DeviceStatus;
+  firmwareVersion: string;
+  notes?: string;
+  lastSeenAt: string | null;
+  createdAt: string;
+}
