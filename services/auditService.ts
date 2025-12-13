@@ -30,6 +30,22 @@ export const AuditService = {
     });
   },
 
+  getAllAuditLogs: (): Promise<AuditLogEntry[]> => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        try {
+          const stored = localStorage.getItem(AUDIT_KEY);
+          let allLogs: AuditLogEntry[] = stored ? JSON.parse(stored) : [];
+          // Sort desc
+          resolve(allLogs.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()));
+        } catch (e) {
+          console.error("Failed to parse audit logs", e);
+          resolve([]);
+        }
+      }, 300);
+    });
+  },
+
   seedAuditLogs: (tenantId: string): Promise<void> => {
     return new Promise((resolve) => {
       setTimeout(() => {
