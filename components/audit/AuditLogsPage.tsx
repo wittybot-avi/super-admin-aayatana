@@ -142,7 +142,7 @@ export const AuditLogsPage: React.FC = () => {
                 placeholder="Search action, actor, or entity..." 
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500"
+                className="w-full pl-9 pr-4 py-2 text-sm border border-slate-700 bg-slate-800 text-white rounded-lg placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500/40 focus:border-teal-500"
             />
         </div>
         <div className="flex gap-3 w-full md:w-auto overflow-x-auto">
@@ -150,7 +150,7 @@ export const AuditLogsPage: React.FC = () => {
                 <select 
                     value={actionFilter}
                     onChange={(e) => setActionFilter(e.target.value)}
-                    className="w-full appearance-none pl-3 pr-8 py-2 text-sm border border-slate-200 rounded-lg bg-white focus:outline-none focus:border-teal-500"
+                    className="w-full appearance-none pl-3 pr-8 py-2 text-sm border border-slate-700 bg-slate-800 text-white rounded-lg focus:outline-none focus:border-teal-500"
                 >
                     <option value="ALL">All Actions</option>
                     {uniqueActions.map(a => <option key={a} value={a}>{a}</option>)}
@@ -162,7 +162,7 @@ export const AuditLogsPage: React.FC = () => {
                 <select 
                     value={entityTypeFilter}
                     onChange={(e) => setEntityTypeFilter(e.target.value)}
-                    className="w-full appearance-none pl-3 pr-8 py-2 text-sm border border-slate-200 rounded-lg bg-white focus:outline-none focus:border-teal-500"
+                    className="w-full appearance-none pl-3 pr-8 py-2 text-sm border border-slate-700 bg-slate-800 text-white rounded-lg focus:outline-none focus:border-teal-500"
                 >
                     <option value="ALL">All Types</option>
                     {uniqueEntityTypes.map(t => <option key={t} value={t}>{t}</option>)}
@@ -174,7 +174,7 @@ export const AuditLogsPage: React.FC = () => {
                 <select 
                     value={dateFilter}
                     onChange={(e) => setDateFilter(e.target.value as DateFilter)}
-                    className="w-full appearance-none pl-3 pr-8 py-2 text-sm border border-slate-200 rounded-lg bg-white focus:outline-none focus:border-teal-500"
+                    className="w-full appearance-none pl-3 pr-8 py-2 text-sm border border-slate-700 bg-slate-800 text-white rounded-lg focus:outline-none focus:border-teal-500"
                 >
                     <option value="ALL">All Time</option>
                     <option value="TODAY">Today</option>
