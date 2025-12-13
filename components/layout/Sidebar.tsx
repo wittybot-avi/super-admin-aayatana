@@ -17,10 +17,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, onChangeView, cur
   // Global items: Always enabled
   // Scoped items: Enabled only when currentTenant is present
   const menuItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, scoped: true },
     { id: 'tenants', label: 'Tenants', icon: Building2, scoped: false },
+    { id: 'dashboard', label: 'Tenant Overview', icon: LayoutDashboard, scoped: true },
     // Onboarding is special: Only show if DRAFT
-    { id: 'onboarding', label: 'Onboarding', icon: ClipboardList, scoped: true, hidden: !isDraft },
+    { 
+      id: 'onboarding', 
+      label: 'Onboarding', 
+      icon: ClipboardList, 
+      scoped: true, 
+      hidden: !isDraft,
+      badge: 'Setup' 
+    },
     { id: 'users', label: 'Users', icon: Users, scoped: true },
     { id: 'devices', label: 'Devices', icon: Radio, scoped: true },
     { id: 'modules', label: 'Modules', icon: Box, scoped: true },
@@ -83,7 +90,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, onChangeView, cur
               )}
               <Icon size={20} className={`transition-colors flex-shrink-0 ${isActive ? 'text-teal-400' : 'text-slate-500 group-hover:text-slate-300'}`} />
               <span className="truncate">{item.label}</span>
-              {isDisabled && <Lock size={12} className="ml-auto text-slate-600" />}
+              
+              {/* Badge for Setup/Draft */}
+              {/* @ts-ignore */}
+              {item.badge && (
+                <span className="ml-auto px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-500 border border-amber-500/20 text-[10px] font-bold uppercase tracking-wide">
+                  {/* @ts-ignore */}
+                  {item.badge}
+                </span>
+              )}
+
+              {isDisabled && !item.badge && <Lock size={12} className="ml-auto text-slate-600" />}
             </button>
           );
         })}

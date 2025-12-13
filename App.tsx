@@ -8,6 +8,7 @@ import { ModulesPage } from './components/modules/ModulesPage';
 import { AnalyticsPage } from './components/analytics/AnalyticsPage';
 import { SettingsPage } from './components/settings/SettingsPage';
 import { AuditLogsPage } from './components/audit/AuditLogsPage';
+import { TenantOverview } from './components/dashboard/TenantOverview';
 import { Building2, Plus, Search, Bell, HelpCircle, ChevronDown, Check } from 'lucide-react';
 import { TenantService } from './services/tenantService';
 import { Tenant } from './types';
@@ -102,7 +103,7 @@ function App() {
         {/* Header */}
         <header className="flex justify-between items-center mb-10">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900 capitalize tracking-tight">{currentView.replace('_', ' ')}</h1>
+            <h1 className="text-3xl font-bold text-slate-900 capitalize tracking-tight">{currentView === 'dashboard' ? 'Tenant Overview' : currentView.replace('_', ' ')}</h1>
             <p className="text-slate-500 mt-1">Manage your platform resources and configurations</p>
           </div>
           
@@ -202,6 +203,8 @@ function App() {
         </header>
 
         {/* Content Area */}
+        {currentView === 'dashboard' && <TenantOverview tenant={currentTenant} onChangeView={setCurrentView} />}
+
         {currentView === 'onboarding' && (
             <OnboardingWizard onComplete={() => {
                 loadData(); // Reload to reflect active status
@@ -300,7 +303,7 @@ function App() {
         )}
 
         {/* Placeholder for other views */}
-        {!['onboarding', 'tenants', 'users', 'devices', 'modules', 'analytics', 'settings', 'audit_logs'].includes(currentView) && (
+        {!['dashboard', 'onboarding', 'tenants', 'users', 'devices', 'modules', 'analytics', 'settings', 'audit_logs'].includes(currentView) && (
           <div className="bg-white rounded-2xl p-20 text-center border-2 border-dashed border-slate-200">
             <Building2 size={64} className="mx-auto text-slate-200 mb-6" />
             <h3 className="text-xl font-bold text-slate-900 mb-2">Work in Progress</h3>
