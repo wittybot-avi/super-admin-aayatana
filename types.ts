@@ -1,3 +1,4 @@
+
 export type CustomerType = 
   | 'BATTERY_MANUFACTURER'
   | 'OEM'
@@ -53,6 +54,8 @@ export interface Tenant {
   updatedAt: string;
 }
 
+export type DeviceTrustMode = 'AAYATANA' | 'HYBRID' | 'EXTERNAL';
+
 export interface OnboardingState {
   step: number;
   // Step 1
@@ -74,8 +77,10 @@ export interface OnboardingState {
   complianceReady: boolean;
   // Step 5 (Simplified for UI state)
   usersInvited: { email: string; role: string }[];
-  // Step 6
-  provisioningMode: 'MANUAL' | 'API' | 'QR_SCAN';
+  // Step 6 - Telemetry & Device Trust
+  deviceTrustMode: DeviceTrustMode;
+  provisioningMode: 'MANUAL' | 'API' | 'QR_SCAN'; // Primary for Aayatana/Hybrid
+  externalIngestModes: string[]; // For External trust mode
   // Step 7
   integrations: {
     telematics: boolean;
@@ -100,7 +105,9 @@ export const INITIAL_ONBOARDING_STATE: OnboardingState = {
   identityScheme: 'QR',
   complianceReady: false,
   usersInvited: [],
+  deviceTrustMode: 'EXTERNAL', // Default, will be overridden by logic in Step 6
   provisioningMode: 'MANUAL',
+  externalIngestModes: [],
   integrations: {
     telematics: false,
     erp: false,
